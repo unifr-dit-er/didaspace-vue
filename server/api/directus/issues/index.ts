@@ -23,6 +23,7 @@ const transform = (response: any): Issue => {
   return {
     id: response.id,
     title: response.translations[0]?.title || "",
+    vignette: response.vignette ? `https://eddb.unifr.ch/didanum-admin/assets/${response.vignette}?fit=cover&width=490&height=300` : "",
     description: response.translations[0]?.description || ""
   }
 }

@@ -2,14 +2,17 @@
 defineProps<{
   title: string,
   description: string
+  vignette?: string
   link?: string
+  tags?: string[]
 }>()
 </script>
 
 <template>
   <div class="card bg-base-100 shadow-xl">
     <figure>
-      <img src="/img/vignette-placeholder.png" alt="" />
+      <img v-if="vignette" :src="vignette" alt="" />
+      <img v-else src="/img/vignette-placeholder.png" alt="" />
     </figure>
     <div class="card-body">
       <h2 class="card-title">
@@ -18,7 +21,7 @@ defineProps<{
         </NuxtLink>
       </h2>
       <div v-if="description" v-html="description"></div>
-      <div class="card-actions justify-end items-center">
+      <div v-if="tags" class="card-actions justify-end items-center">
         <div class="badge badge-outline">Tag 1</div>
         <div class="badge badge-outline">Tag 2</div>
       </div>

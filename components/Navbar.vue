@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const localePath = useLocalePath()
-const { setLocale } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
 
 const langs = [
   { id: "fr", title: "Français" },
@@ -25,9 +25,9 @@ const langs = [
         </div>
         <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-36 p-2 shadow">
           <li v-for="lang in langs" :key="lang.id">
-            <a @click="setLocale(lang.id as 'fr' | 'de' | 'it')">
+            <NuxtLink :to="switchLocalePath(lang.id as 'fr' | 'de' | 'it')">
               <img class="w-6 rounded" :src="`/img/${lang.id}.svg`" alt="" /> {{ lang.title }}
-            </a>
+            </NuxtLink>
           </li>
         </ul>
       </div>

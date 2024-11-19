@@ -23,12 +23,13 @@ const { data: issues, error } = await useFetch<Issue[]>(`/api/${apiProvider}/iss
       <VCard v-for="issue in issues" :key="issue.id" 
         :title="issue.title" 
         :description="issue.description || ''"
+        :vignette="issue.vignette"
         :link="localePath(`/issues/${issue.id}`)"
       />
-      <VCard title="Débusquer le passager clandestin" description="Description du sujet" />
-      <VCard title="Concevoir des Quizzes avec l'IA" description="Description du sujet" />
-      <VCard title="Evaluer avec l'IA" description="Description du sujet" />
-      <VCard title="Détecter le plagiat" description="Description du sujet" />
+      <VCard title="Débusquer le passager clandestin" description="Description du sujet" :tags="['tag1', 'tag2']" />
+      <VCard title="Concevoir des Quizzes avec l'IA" description="Description du sujet" :tags="['tag1', 'tag2']" />
+      <VCard title="Evaluer avec l'IA" description="Description du sujet" :tags="['tag1', 'tag2']" />
+      <VCard title="Détecter le plagiat" description="Description du sujet" :tags="['tag1', 'tag2']" />
     </div>
   </div>
 </template>
