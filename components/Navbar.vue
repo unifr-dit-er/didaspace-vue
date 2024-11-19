@@ -4,8 +4,7 @@ const switchLocalePath = useSwitchLocalePath()
 
 const langs = [
   { id: "fr", title: "Français" },
-  { id: "de", title: "Deutsch" },
-  { id: "it", title: "Italiano" }
+  { id: "de", title: "Deutsch" }
 ]
 </script>
 
