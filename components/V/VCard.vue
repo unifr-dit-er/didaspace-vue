@@ -2,6 +2,7 @@
 defineProps<{
   title: string,
   description: string
+  link?: string
 }>()
 </script>
 
@@ -12,10 +13,12 @@ defineProps<{
     </figure>
     <div class="card-body">
       <h2 class="card-title">
-        {{ title }}
+        <NuxtLink :to="link ? link : '#'" class="link link-primary decoration-dotted hover:decoration-solid underline-offset-8">
+          {{ title }}
+        </NuxtLink>
       </h2>
-      <p>{{ description}}</p>
-      <div class="card-actions justify-end">
+      <div v-if="description" v-html="description"></div>
+      <div class="card-actions justify-end items-center">
         <div class="badge badge-outline">Tag 1</div>
         <div class="badge badge-outline">Tag 2</div>
       </div>

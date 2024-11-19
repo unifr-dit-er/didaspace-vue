@@ -7,6 +7,14 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/icon'
   ],
+  typescript: {
+    typeCheck: true
+  },
+  runtimeConfig: {
+    public: {
+      apiProvider: 'directus'
+    }
+  },
   i18n: {
     strategy: "prefix",
     vueI18n: './i18n.config.ts',

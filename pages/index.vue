@@ -1,15 +1,30 @@
 <script setup lang="ts">
-import VCard from '~/components/V/VCard.vue';
-import VSearch from '~/components/V/VSearch.vue';
+import type { Issue } from "@/types/issue"
+
+const apiProvider = useRuntimeConfig().public.apiProvider
+const localePath = useLocalePath()
+const { locale } = useI18n()
+
+const { data: issues, error } = await useFetch<Issue[]>(`/api/${apiProvider}/issues`, {
+  query: { lang: `${locale.value}-${locale.value.toUpperCase()}` }
+})
 </script>
 
 <template>
-  <div class="container mx-auto px-4 pt-20 min-h-screen">
+  <div class="container mx-auto px-4 pt-20 pb-8 min-h-screen">
     <div class="my-8">
       <VSearch />
     </div>
-    <div class="grid grid-cols-3 gap-4">
-      <VCard title="Sujet 1" description="Description du sujet" />
+    <VError v-if="error" :code="error.statusCode" :message="error.statusMessage" />
+    <div v-else-if="issues" class="grid grid-cols-3 gap-4">
+      <div class="flex items-center justify-center">
+        <img src="/img/undraw_teaching_re_g7e3.svg" class="w-96" />
+      </div>
+      <VCard v-for="issue in issues" :key="issue.id" 
+        :title="issue.title" 
+        :description="issue.description || ''"
+        :link="localePath(`/issues/${issue.id}`)"
+      />
       <VCard title="Débusquer le passager clandestin" description="Description du sujet" />
       <VCard title="Concevoir des Quizzes avec l'IA" description="Description du sujet" />
       <VCard title="Evaluer avec l'IA" description="Description du sujet" />
