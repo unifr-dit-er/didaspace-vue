@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
 useHead({
-  title: "MyPTE",
+  title: "DidaSpace",
   meta: [
     {
-      name: "MyPTE",
-      content: "MyPTE"
+      name: "DidaSpace",
+      content: "DidaSpace"
     }
   ]
 })

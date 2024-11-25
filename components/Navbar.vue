@@ -15,7 +15,7 @@ const langs = [
       <img class="w-28 hidden lg:block" src="/img/hesso-logo.png" alt="Hes so logo" />
     </div>
     <div class="navbar-center">
-      <NuxtLink :to="localePath('/')" class="btn btn-ghost text-2xl">MyPTE : espace pédagogique</NuxtLink>
+      <NuxtLink :to="localePath('/')" class="btn btn-ghost text-2xl">DidaSpace : Espace pédagogique du supérieur</NuxtLink>
     </div>
     <div class="navbar-end">
       <div class="dropdown dropdown-end">
