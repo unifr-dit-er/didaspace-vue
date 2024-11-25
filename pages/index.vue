@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { Issue } from "@/types/issue"
 
-const apiProvider = useRuntimeConfig().public.apiProvider
+const { apiProvider } = useRuntimeConfig().public
 const localePath = useLocalePath()
 const { locale } = useI18n()
+const search = useSearch()
 
 const { data: issues, error } = await useFetch<Issue[]>(`/api/${apiProvider}/issues`, {
-  query: { lang: `${locale.value}-${locale.value.toUpperCase()}` }
+  query: { lang: `${locale.value}-${locale.value.toUpperCase()}`, search }
 })
 </script>
 
