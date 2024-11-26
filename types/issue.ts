@@ -1,4 +1,5 @@
-import type { Video } from "./video";
+import type { Video } from "./video"
+import type { File } from "./file"
 
 export interface Issue {
   id: number;
@@ -8,4 +9,5 @@ export interface Issue {
   url?: string;
   solutions?: Video[];
   testimonies?: Video[];
+  appendix?: File[];
 }

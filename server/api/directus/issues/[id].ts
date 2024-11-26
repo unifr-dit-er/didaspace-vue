@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
   const res = await useDirectus().request(
     readItem("pte_issues", id, {
-      fields: ["*", "translations.*"],
+      fields: ["*", "translations.*", "appendix.directus_files_id.*"],
       deep: { translations: { _filter: { languages_code: { _eq: lang } } } }
     })
   )
@@ -21,6 +21,10 @@ const transformYoutubeUrl = (url: string): string => {
   const videoId = url.split('/').pop()?.split('?')[0]
   const params = url.includes('?') ? '?' + url.split('?')[1] : ''
   return `https://www.youtube-nocookie.com/embed/${videoId}${params}`
+}
+
+const transformAppendixUrl = (id: string): string => {
+  return `https://eddb.unifr.ch/didanum-admin/assets/${id}`
 }
 
 const transform = (response: any): Issue => {
@@ -36,6 +40,10 @@ const transform = (response: any): Issue => {
     testimonies: (response.translations[0]?.testimonies || []).map((video: any) => ({
       title: video.title || "",
       url: transformYoutubeUrl(video.video_url)
+    })),
+    appendix: response.appendix.map((appendix: any) => ({
+      title: appendix.directus_files_id.title || "",
+      url: transformAppendixUrl(appendix.directus_files_id.id)
     }))
   }
 }

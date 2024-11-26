@@ -31,7 +31,10 @@ if (issue.value == null || issue.value.title == "") {
         </div>
       </div>
       <div class="basis-1/3 mt-24">
-        <VCardVideo v-for="testimonie in issue.testimonies" :url="testimonie.url" :title="testimonie.title" class="mb-4" />
+        <div class="mb-8">
+          <VCardVideo v-for="testimonie in issue.testimonies" :url="testimonie.url" :title="testimonie.title" class="mb-4" />
+        </div>
+        <VFiles title="Documents à télécharger" :files="issue.appendix" class="mb-8" />
       </div>
     </div>
   </div>
