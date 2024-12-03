@@ -26,7 +26,7 @@ if (issue.value == null || issue.value.title == "") {
         <div class="my-6">
           <VCardVideo v-if="issue.url" :url="issue.url" :description="issue.description" />
         </div>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid md:grid-cols-2 gap-4">
           <VCardVideo v-for="solution in issue.solutions" :url="solution.url" :title="solution.title" />
         </div>
       </div>

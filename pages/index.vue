@@ -17,7 +17,7 @@ const { data: issues, error } = await useFetch<Issue[]>(`/api/${apiProvider}/iss
       <VSearch />
     </div>
     <VError v-if="error" :code="error.statusCode" :message="error.statusMessage" />
-    <div v-else-if="issues" class="grid grid-cols-3 gap-4">
+    <div v-else-if="issues" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="flex items-center justify-center">
         <img src="/img/undraw_teaching_re_g7e3.svg" class="w-96" />
       </div>
