@@ -6,13 +6,7 @@ interface QueryOptions {
   fields: string[];
   deep: { translations: { _filter: { languages_code: { _eq: string } } } };
   sort: string[];
-  filter?: {
-    translations: {
-      title: {
-        _contains: string
-      }
-    }
-  }
+  filter?: any;
 }
 
 export default defineEventHandler(async (event) => {
@@ -22,18 +16,19 @@ export default defineEventHandler(async (event) => {
 
   const queryOptions: QueryOptions = {
     limit: -1,
-    fields: ["*", "translations.title", "translations.description"],
+    fields: ["*", "translations.title", "translations.description", "translations.content"],
     deep: { translations: { _filter: { languages_code: { _eq: lang } } } },
     sort: ["sort"]
   }
 
   if (search.trim() !== '') {
     queryOptions.filter = {
-      translations: {
-        title: {
-          _contains: search
-        }
-      }
+      _or: [
+        { translations: { title: { _contains: search } } },
+        { translations: { description: { _contains: search } } },
+        { translations: { content: { _contains: search } } },
+        { pdf_text: { _contains: search } }
+      ]
     }
   }
 

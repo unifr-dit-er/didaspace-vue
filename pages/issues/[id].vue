@@ -29,6 +29,7 @@ if (issue.value == null || issue.value.title == "") {
         <div class="grid md:grid-cols-2 gap-4">
           <VCardVideo v-for="solution in issue.solutions" :url="solution.url" :title="solution.title" />
         </div>
+        <div v-html="issue.content" class="p-4 prose lg:prose-lg max-w-none"></div>
       </div>
       <div class="basis-1/3 mt-24">
         <div class="mb-8">

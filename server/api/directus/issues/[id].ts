@@ -32,6 +32,7 @@ const transform = (response: any): Issue => {
     id: response.id,
     title: response.translations[0]?.title || "",
     description: response.translations[0]?.description || "",
+    content: response.translations[0]?.content || "",
     url: transformYoutubeUrl(response.translations[0]?.video_url),
     solutions: (response.translations[0]?.solutions || []).map((video: any) => ({
       title: video.title || "",
