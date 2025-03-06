@@ -20,8 +20,8 @@ defineProps<{
           {{ title }}
         </NuxtLink>
       </h2>
-      <div v-if="description" v-html="description"></div>
-      <div v-if="tags" class="card-actions justify-end items-center">
+      <div class="overflow-hidden line-clamp-3" v-if="description" v-html="description"></div>
+      <div class="card-actions justify-end items-center">
         <div class="badge badge-outline">Tag 1</div>
         <div class="badge badge-outline">Tag 2</div>
       </div>
