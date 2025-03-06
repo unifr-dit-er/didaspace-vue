@@ -17,7 +17,7 @@ const { data: issues, error } = await useFetch<Issue[]>(`/api/${apiProvider}/iss
       <VSearch />
     </div>
     <VError v-if="error" :code="error.statusCode" :message="error.statusMessage" />
-    <div v-else-if="issues" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div v-else-if="issues" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
       <div class="flex items-center justify-center">
         <img src="/img/undraw_teaching_re_g7e3.svg" class="w-96" />
       </div>
@@ -27,10 +27,6 @@ const { data: issues, error } = await useFetch<Issue[]>(`/api/${apiProvider}/iss
         :vignette="issue.vignette"
         :link="localePath(`/issues/${issue.id}`)"
       />
-      <VCard title="Débusquer le passager clandestin" description="Description du sujet" :tags="['tag1', 'tag2']" />
-      <VCard title="Concevoir des Quizzes avec l'IA" description="Description du sujet" :tags="['tag1', 'tag2']" />
-      <VCard title="Evaluer avec l'IA" description="Description du sujet" :tags="['tag1', 'tag2']" />
-      <VCard title="Détecter le plagiat" description="Description du sujet" :tags="['tag1', 'tag2']" />
     </div>
   </div>
 </template>
