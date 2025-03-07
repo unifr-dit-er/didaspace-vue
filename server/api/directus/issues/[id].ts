@@ -1,50 +1,84 @@
 import { readItem } from "@directus/sdk"
+import { transformYoutubeUrl } from "@/server/utils/youtube"
+import { directusAssetUrl } from "~/server/utils/directus"
 import type { Issue } from "@/types/issue"
+
+interface DirectusIssue {
+  id: string
+  translations: Array<{
+    title?: string
+    description?: string
+    content?: string
+    video_url?: string
+    solutions?: Array<{
+      title?: string
+      video_url?: string
+    }>
+    testimonies?: Array<{
+      title?: string
+      video_url?: string
+    }>
+  }>
+  appendix: Array<{
+    directus_files_id: {
+      id: string
+      title?: string
+    }
+  }>
+}
+
+interface VideoItem {
+  title: string
+  url: string
+}
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id') || '1'
   const query = getQuery(event)
-  const lang = query.lang as string || 'fr-FR'
+  const lang = (query.lang as string) || 'fr-FR'
 
-  const res = await useDirectus().request(
-    readItem("pte_issues", id, {
-      fields: ["*", "translations.*", "appendix.directus_files_id.*"],
-      deep: { translations: { _filter: { languages_code: { _eq: lang } } } }
+  try {
+    const res = await useDirectus().request(
+      readItem("pte_issues", id, {
+        fields: ["*", "translations.*", "appendix.directus_files_id.*"],
+        deep: { translations: { _filter: { languages_code: { _eq: lang } } } }
+      })
+    ) as DirectusIssue
+
+    return transform(res)
+  } catch (error) {
+    console.error(`Erreur lors de la récupération de l'issue ${id}:`, error)
+    throw createError({
+      statusCode: 500,
+      message: `Impossible de récupérer les données pour l'issue ${id}`
     })
-  )
-
-  return transform(res) as Issue
+  }
 })
 
-const transformYoutubeUrl = (url: string): string => {
-  if (!url) return ""
-  const videoId = url.split('/').pop()?.split('?')[0]
-  const params = url.includes('?') ? '?' + url.split('?')[1] : ''
-  return `https://www.youtube-nocookie.com/embed/${videoId}${params}`
+const transformVideoItems = (items?: Array<{ title?: string, video_url?: string }> | null): VideoItem[] => {
+  return (items || []).map(item => ({
+    title: item.title || "",
+    url: transformYoutubeUrl(item.video_url)
+  }))
 }
 
-const transformAppendixUrl = (id: string): string => {
-  return `https://eddb.unifr.ch/didanum-admin/assets/${id}`
-}
-
-const transform = (response: any): Issue => {
+/**
+ * Transform API response into Issue object
+ */
+const transform = (response: DirectusIssue): Issue => {
+  const translation = response.translations[0] || {}
+  
   return {
-    id: response.id,
-    title: response.translations[0]?.title || "",
-    description: response.translations[0]?.description || "",
-    content: response.translations[0]?.content || "",
-    url: transformYoutubeUrl(response.translations[0]?.video_url),
-    solutions: (response.translations[0]?.solutions || []).map((video: any) => ({
-      title: video.title || "",
-      url: transformYoutubeUrl(video.video_url)
-    })),
-    testimonies: (response.translations[0]?.testimonies || []).map((video: any) => ({
-      title: video.title || "",
-      url: transformYoutubeUrl(video.video_url)
-    })),
-    appendix: response.appendix.map((appendix: any) => ({
-      title: appendix.directus_files_id.title || "",
-      url: transformAppendixUrl(appendix.directus_files_id.id)
+    id: Number(response.id),
+    title: translation.title || "",
+    description: translation.description || "",
+    content: translation.content || "",
+    url: transformYoutubeUrl(translation.video_url),
+    solutions: transformVideoItems(translation.solutions),
+    testimonies: transformVideoItems(translation.testimonies),
+    appendix: (response.appendix || []).map((appendix) => ({
+      title: appendix?.directus_files_id?.title || "",
+      url: directusAssetUrl(appendix?.directus_files_id?.id || "")
     }))
   }
 }

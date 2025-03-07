@@ -21,3 +21,7 @@ export const dTranslate = (translations: Translation[], key: string, lang: strin
   const translation = translations.find(item => item.key === key && item.language === lang)
   return translation ? translation.value : ''
 }
+
+export const directusAssetUrl = (id: string): string => {
+  return `https://eddb.unifr.ch/didanum-admin/assets/${id}`
+}
