@@ -25,6 +25,10 @@ interface DirectusIssue {
       title?: string
     }
   }>
+  links?: Array<{
+    title?: string
+    url?: string
+  }>
 }
 
 interface VideoItem {
@@ -79,6 +83,10 @@ const transform = (response: DirectusIssue): Issue => {
     appendix: (response.appendix || []).map((appendix) => ({
       title: appendix?.directus_files_id?.title || "",
       url: directusAssetUrl(appendix?.directus_files_id?.id || "")
+    })),
+    links: (response.links || []).map(link => ({
+      title: link.title || "",
+      url: link.url || ""
     }))
   }
 }

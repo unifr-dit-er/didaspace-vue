@@ -11,4 +11,8 @@ export interface Issue {
   solutions?: Video[];
   testimonies?: Video[];
   appendix?: File[];
+  links?: {
+    title: string;
+    url: string;
+  }[];
 }

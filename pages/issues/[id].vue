@@ -35,7 +35,21 @@ if (issue.value == null || issue.value.title == "") {
         <div class="mb-8">
           <VCardVideo v-for="testimonie in issue.testimonies" :url="testimonie.url" :title="testimonie.title" class="mb-4" />
         </div>
-        <VFiles title="Documents à télécharger" :files="issue.appendix" class="mb-8" />
+        <ul class="menu bg-base-100 rounded-box mb-8">
+          <li class="menu-title text-lg">Ressources</li>
+          <li v-for="appendix in issue.appendix">
+            <NuxtLink :to="appendix.url">
+              <Icon name="tabler:paperclip" size="24px" />
+              {{ appendix.title }}
+            </NuxtLink>
+          </li>
+          <li v-for="link in issue.links">
+            <NuxtLink :to="link.url">
+              <Icon name="tabler:link" size="24px" />
+              {{ link.title }}
+            </NuxtLink>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
