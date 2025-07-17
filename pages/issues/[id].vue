@@ -35,7 +35,7 @@ if (issue.value == null || issue.value.title == "") {
         <div class="mb-8">
           <VCardVideo v-for="testimonie in issue.testimonies" :url="testimonie.url" :title="testimonie.title" class="mb-4" />
         </div>
-        <ul class="menu bg-base-100 rounded-box mb-8">
+        <ul class="menu bg-base-100 rounded-box mb-8" v-if="issue.appendix || issue.links">
           <li class="menu-title text-lg">Ressources</li>
           <li v-for="appendix in issue.appendix">
             <NuxtLink :to="appendix.url">
