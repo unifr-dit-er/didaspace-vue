@@ -1,27 +1,22 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-04-03',
+  compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/i18n',
-    '@nuxt/icon'
-  ],
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/i18n", "@nuxt/icon"],
   typescript: {
-    typeCheck: true
+    typeCheck: true,
   },
   runtimeConfig: {
     public: {
-      apiProvider: 'directus'
-    }
+      apiProvider: "directus",
+    },
   },
   i18n: {
     strategy: "prefix",
-    vueI18n: './i18n.config.ts',
     locales: [
-      { code: 'fr', language: 'fr-FR'},
-      { code: 'de', language: 'de-DE'}
+      { code: "fr", name: "Français", file: "fr.json" },
+      { code: "de", name: "Deutsch", file: "de.json" },
     ],
-    defaultLocale: "fr"
+    defaultLocale: "fr",
   },
-})
+});
