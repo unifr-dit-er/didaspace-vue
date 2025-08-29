@@ -12,9 +12,11 @@ useHead({
 </script>
 
 <template>
-  <div tabindex="0" class="bg-base-200">
+  <div tabindex="0" class="bg-base-200 flex flex-col min-h-screen">
     <Navbar />
-    <NuxtPage />
+    <main class="flex-1">
+      <NuxtPage />
+    </main>
     <Footer />
   </div>
 </template>
