@@ -10,6 +10,7 @@ export interface Issue {
   url?: string;
   solutions?: Video[];
   testimonies?: Video[];
+  resourcesDescription?: string;
   appendix?: File[];
   links?: {
     title: string;

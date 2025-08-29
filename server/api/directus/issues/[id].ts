@@ -18,6 +18,7 @@ interface DirectusIssue {
       title?: string
       video_url?: string
     }>
+    resources_description?: string
   }>
   appendix: Array<{
     directus_files_id: {
@@ -80,6 +81,7 @@ const transform = (response: DirectusIssue): Issue => {
     url: transformYoutubeUrl(translation.video_url),
     solutions: transformVideoItems(translation.solutions),
     testimonies: transformVideoItems(translation.testimonies),
+    resourcesDescription: translation.resources_description || "",
     appendix: (response.appendix || []).map((appendix) => ({
       title: appendix?.directus_files_id?.title || "",
       url: directusAssetUrl(appendix?.directus_files_id?.id || "")
