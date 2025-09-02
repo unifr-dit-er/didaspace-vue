@@ -23,6 +23,9 @@ if (issue.value == null || issue.value.title == "") {
         <h1 class="text-3xl font-bold border-b-2 border-slate-300 pb-2 my-6">
           {{ issue.title }}
         </h1>
+        <div class="text-xl">
+          <div v-html="issue.resourcesDescription"></div>
+        </div>
         <div class="my-6">
           <VCardVideo v-if="issue.url" :url="issue.url" :description="issue.description" />
         </div>
@@ -38,7 +41,6 @@ if (issue.value == null || issue.value.title == "") {
         <div class="card bg-base-100 shadow-sm">
           <div class="card-body">
             <h2 class="card-title">Ressources</h2>
-            <div v-html="issue.resourcesDescription"></div>
             <ul class="menu bg-base-100 rounded-box" v-if="issue.appendix?.length || issue.links?.length">
               <li v-for="appendix in issue.appendix">
                 <NuxtLink :to="appendix.url">
